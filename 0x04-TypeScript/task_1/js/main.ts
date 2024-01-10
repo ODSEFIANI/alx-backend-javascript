@@ -34,3 +34,6 @@ function createTeacher({
     ...additionalAttributes,
   };
 }
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
