@@ -46,3 +46,5 @@ const printTeacher: PrintTeacherFunction = (firstName, lastName) => {
   const fullLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
   return `${initial}. ${fullLastName}`;
 };
+const result = printTeacher("John", "Doe");
+console.log(result); // Output: J. Doe
