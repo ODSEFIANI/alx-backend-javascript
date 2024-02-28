@@ -1,11 +1,24 @@
-process.stdout.write('Welcome to Holberton School, what is your name?\n');
+// 1-stdin-updated.js
 
-process.stdin.on('data', (data) => {
-    const name = data.toString().trim();
-    process.stdout.write(`Your name is: ${name}\n`);
+const outputMessage = 'Welcome to Holberton School, what is your name?\n';
+const closingMessage = 'This important software is now closing\n';
+
+process.stdout.write(outputMessage);
+
+if (process.stdin.isTTY) {
+  process.stdin.on('data', (inputData) => {
+    const enteredName = inputData.toString();
+    process.stdout.write(`Your name is: ${enteredName}`);
     process.exit();
-});
+  });
+} else {
+  process.stdin.on('data', (inputData) => {
+    const enteredName = inputData.toString();
+    process.stdout.write(`Your name is: ${enteredName}`);
+    process.exit();
+  });
 
-process.on('exit', () => {
-    process.stdout.write('This important software is now closing\n');
-});
+  process.on('exit', () => {
+    process.stdout.write(closingMessage);
+  });
+}
