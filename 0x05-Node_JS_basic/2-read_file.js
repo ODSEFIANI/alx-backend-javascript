@@ -2,7 +2,6 @@ const fs = require('fs');
 
 function countStudents(path) {
     try {
-        // Read the database file synchronously
         const data = fs.readFileSync(path, 'utf8');
 
         // Split the data into lines and filter out empty lines
@@ -39,4 +38,3 @@ function countStudents(path) {
 }
 
 module.exports = countStudents;
-

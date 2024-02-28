@@ -1,4 +1,3 @@
-// 1-stdin-updated.js
 
 const outputMessage = 'Welcome to Holberton School, what is your name?\n';
 const closingMessage = 'This important software is now closing\n';
