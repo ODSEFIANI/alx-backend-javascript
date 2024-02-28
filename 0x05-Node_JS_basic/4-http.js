@@ -1,12 +1,12 @@
 const http = require('http');
 
-const app = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello Holberton School!\n');
+const app = http.createServer((request, response) => {
+    response.statusCode = 200;
+    response.setHeader('Content-Type', 'text/plain');
+    response.end('Hello Holberton School!\n');
 });
 
-app.listen(1245, () => {
+app.listen(1245, '127.0.0.1', () => {
     console.log('Server running at http://localhost:1245/');
 });
 
