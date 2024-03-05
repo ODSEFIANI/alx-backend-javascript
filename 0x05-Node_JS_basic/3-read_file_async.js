@@ -15,12 +15,12 @@ function countStudents(path) {
         let totalStudents = 0;
         let csStudents = 0;
         let sweStudents = 0;
-        let csList = [];
-        let sweList = [];
+        const csList = [];
+        const sweList = [];
 
         // Process each line and update counters and lists
         lines.forEach(line => {
-          const [firstName, lastName, age, field] = line.split(',');
+          const [firstName, , , field] = line.split(',');
           if (field === 'CS') {
             csStudents++;
             csList.push(firstName);
@@ -30,7 +30,6 @@ function countStudents(path) {
             sweList.push(firstName);
             totalStudents++;
           }
-
         });
 
         // Log the results to the console
