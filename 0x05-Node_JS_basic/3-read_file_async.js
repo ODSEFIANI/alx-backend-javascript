@@ -9,7 +9,7 @@ function countStudents(path) {
         reject(new Error('Cannot load the database'));
       } else {
         // Split the data into lines and filter out empty lines
-        const lines = data.split('\n').filter(line => line.trim() !== '');
+        const lines = data.split('\n').filter((line) => line.trim() !== '');
 
         // Initialize counters and lists for each field
         let totalStudents = 0;
@@ -19,16 +19,16 @@ function countStudents(path) {
         const sweList = [];
 
         // Process each line and update counters and lists
-        lines.forEach(line => {
+        lines.forEach((line) => {
           const [firstName, , , field] = line.split(',');
           if (field === 'CS') {
-            csStudents++;
+            csStudents += 1;
             csList.push(firstName);
-            totalStudents++;
+            totalStudents += 1;
           } else if (field === 'SWE') {
-            sweStudents++;
+            sweStudents += 1;
             sweList.push(firstName);
-            totalStudents++;
+            totalStudents += 1;
           }
         });
 
