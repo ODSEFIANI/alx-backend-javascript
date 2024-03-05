@@ -20,11 +20,13 @@ function countStudents(path) {
             if (field === 'CS') {
                 csStudents++;
                 csList.push(firstName);
+                totalStudents++;
             } else if (field === 'SWE') {
                 sweStudents++;
                 sweList.push(firstName);
+                totalStudents++;
             }
-            totalStudents++;
+            
         });
 
         // Log the results to the console
