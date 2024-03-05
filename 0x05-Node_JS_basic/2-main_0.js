@@ -1,3 +1,3 @@
-const countStudents = require('./2-read_file').default;
+const countStudents = require('./3-read_file_async');
 
 countStudents("database.csv");

@@ -5,17 +5,17 @@ function countStudents(path) {
     const data = fs.readFileSync(path, 'utf8');
 
     // Split the data into lines and filter out empty lines
-    const lines = data.split('\n').filter((line) => line.trim() !== '');
+    const lines = data.split('\n').filter(line => line.trim() !== '');
 
     // Initialize counters and lists for each field
     let totalStudents = 0;
     let csStudents = 0;
     let sweStudents = 0;
-    const csList = [];
-    const sweList = [];
+    let csList = [];
+    let sweList = [];
 
     // Process each line and update counters and lists
-    lines.forEach((line) => {
+    lines.forEach(line => {
       const [firstName, lastName, age, field] = line.split(',');
       if (field === 'CS') {
         csStudents++;
