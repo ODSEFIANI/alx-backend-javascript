@@ -4,48 +4,41 @@ const { readFile } = require('fs').promises;
 const hostname = '127.0.0.1';
 const port = 1245;
 
-function countStudents(path) {
-  return new Promise((resolve, reject) => {
-    // Attempt to read the database file asynchronously
-    readFile(path, 'utf8')
-      .then((data) => {
-        // Split the data into lines and filter out empty lines
-        const lines = data.split('\n').filter((line) => line.trim() !== '');
+async function countStudents(path) {
+  try {
+    const data = await readFile(path, 'utf8');
+    const lines = data.split('\n').filter((line) => line.trim() !== '');
 
-        // Initialize counters and lists for each field
-        let totalStudents = 0;
-        let csStudents = 0;
-        let sweStudents = 0;
-        const csList = [];
-        const sweList = [];
+    let totalStudents = 0;
+    let csStudents = 0;
+    let sweStudents = 0;
+    const csList = [];
+    const sweList = [];
 
-        // Process each line and update counters and lists
-        lines.forEach((line) => {
-          const [firstName, , , field] = line.split(',');
-          if (field === 'CS') {
-            csStudents += 1;
-            csList.push(firstName);
-            totalStudents += 1;
-          } else if (field === 'SWE') {
-            sweStudents += 1;
-            sweList.push(firstName);
-            totalStudents += 1;
-          }
-        });
+    lines.forEach((line) => {
+      const [firstName, , , field] = line.split(',');
+      if (field === 'CS') {
+        csStudents += 1;
+        csList.push(firstName);
+        totalStudents += 1;
+      } else if (field === 'SWE') {
+        sweStudents += 1;
+        sweList.push(firstName);
+        totalStudents += 1;
+      }
+    });
 
-        // Log the results to the console
-        console.log(`Number of students: ${totalStudents}`);
-        console.log(`Number of students in CS: ${csStudents}. List: ${csList.join(', ')}`);
-        console.log(`Number of students in SWE: ${sweStudents}. List: ${sweList.join(', ')}`);
-
-        // Resolve the promise
-        resolve();
-      })
-      .catch((error) => {
-        // Reject the promise with an error if the database is not available
-        reject(new Error('Cannot load the database'));
-      });
-  });
+    // Return the results as an object
+    return {
+      totalStudents,
+      csStudents,
+      sweStudents,
+      csList,
+      sweList,
+    };
+  } catch (error) {
+    throw new Error('Cannot load the database');
+  }
 }
 
 const app = http.createServer(async (request, response) => {
@@ -56,12 +49,16 @@ const app = http.createServer(async (request, response) => {
     response.write('Hello Holberton School!');
     response.end();
   } else if (request.url === '/students') {
-    // Extract the filename from the query parameters
     const fileName = process.argv[2];
 
     response.write('This is the list of our students\n');
     try {
-      await countStudents(fileName);
+      const result = await countStudents(fileName);
+
+      // Send the data to the client
+      response.write(`Number of students: ${result.totalStudents}\n`);
+      response.write(`Number of students in CS: ${result.csStudents}. List: ${result.csList.join(', ')}\n`);
+      response.write(`Number of students in SWE: ${result.sweStudents}. List: ${result.sweList.join(', ')}\n`);
     } catch (error) {
       response.statusCode = 404;
       response.write('Cannot load the database');
